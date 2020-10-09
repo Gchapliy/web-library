@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Registration page</title>
+</head>
+<body>
+
+<form th:action="@{/registration}" th:object="${userForm}" method="post">
+    <div>
+        <label> User Name : <input type="text" th:field="*{username}"/> </label>
+        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">User name is not valid</span>
+    </div>
+    <div>
+        <label> Password: <input type="password" th:field="*{password}"/></label>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password is not valid</span>
+    </div>
+    <div><input type="submit" value="Register"/></div>
+    <div><a th:href="@{/}"/>Cancel</div>
+</form>
+</body>
+</html>
