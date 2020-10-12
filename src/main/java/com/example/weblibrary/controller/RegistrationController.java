@@ -1,7 +1,8 @@
 package com.example.weblibrary.controller;
 
-import com.example.weblibrary.model.user.User;
+import com.example.weblibrary.model.dto.UserForm;
 import com.example.weblibrary.service.UserService;
+import com.example.weblibrary.utils.constants.URLConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,21 +19,34 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/registration")
+    @GetMapping(URLConstants.REGISTRATION_PAGE)
     public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+        model.addAttribute("userForm", new UserForm());
 
-        return "registration";
+        return URLConstants.REGISTRATION_PAGE;
     }
 
-    @PostMapping("/registration")
-    public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult) {
+    @PostMapping(URLConstants.REGISTRATION_PAGE)
+    public String addUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            bindingResult.getAllErrors().forEach(objectError -> {
+                System.out.println(objectError.getCode() + " " + objectError.getDefaultMessage());
+                if (objectError.getCode().contains("PasswordMatches")) {
+
+                    model.addAttribute("confirmPasswordError", objectError.getDefaultMessage());
+                }
+            });
+            return URLConstants.REGISTRATION_PAGE;
         }
 
 
+        if (userService.findUserByName(userForm.getUsername()) != null){
+            model.addAttribute("userExistsError", "User with name " + userForm.getUsername() + " already exists");
+            return URLConstants.REGISTRATION_PAGE;
+        }
+
+        userService.saveUser(userForm);
         return "redirect:/";
     }
 }

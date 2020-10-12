@@ -15,6 +15,13 @@
         <label> Password: <input type="password" th:field="*{password}"/></label>
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password is not valid</span>
     </div>
+    <div>
+        <label> Confirm password: <input type="password" th:field="*{confirmPassword}"/></label>
+<!--        <span th:if="${#fields.hasErrors('PasswordMatches')}" th:errors="*{PasswordMatches}">Password is not valid</span>-->
+        <span th:text="${confirmPasswordError != null} ? ${confirmPasswordError}">confirmPassword is not valid</span>
+
+    </div>
+    <span th:text="${userExistsError != null} ? ${userExistsError}">confirmPassword is not valid</span>
     <div><input type="submit" value="Register"/></div>
     <div><a th:href="@{/}"/>Cancel</div>
 </form>

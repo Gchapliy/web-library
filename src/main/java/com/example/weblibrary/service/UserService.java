@@ -1,5 +1,6 @@
 package com.example.weblibrary.service;
 
+import com.example.weblibrary.model.dto.UserForm;
 import com.example.weblibrary.model.user.Role;
 import com.example.weblibrary.model.user.User;
 import com.example.weblibrary.repository.RoleRepository;
@@ -33,16 +34,15 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
+    public boolean saveUser(UserForm userForm) {
+        User user = new User();
 
-        if (userFromDB != null) {
-            return false;
-        }
+        Role userRole = roleRepository.findByName("ROLE_USER");
 
-        user.setRoles(Collections.singleton(new Role("ROLE_USER")));
+        user.setRoles(Collections.singleton(userRole));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
         return true;
     }
 
@@ -52,5 +52,9 @@ public class UserService implements UserDetailsService {
             return true;
         }
         return false;
+    }
+
+    public User findUserByName(String name){
+        return userRepository.findByUsername(name);
     }
 }
