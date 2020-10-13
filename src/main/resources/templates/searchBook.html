@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Registration page</title>
+</head>
+<body>
+
+<form th:action="@{/searchBook}" th:object="${bookForm}" method="post">
+    <div>
+        <label> Book Name : <input type="text" th:field="*{bookName}"/> </label>
+        <span th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}">Book name is not valid</span>
+    </div>
+
+    <div><input type="submit" value="Search"/></div>
+
+    <div><a th:href="@{/}"/>Cancel</div>
+</form>
+
+</br>
+<h2>Found books</h2>
+</br>
+<table th:if="${books != null}">
+    <tr>
+        <th>#</th>
+        <th>Book name</th>
+        <th>author</th>
+        <th>description</th>
+        <th>categories</th>
+    </tr>
+        <th:block th:each="book : ${books}">
+            <tr>
+                <td th:text="${book.id}"></td>
+                <td><a th:href="@{/book/${book.id}}" th:text="${book.name}"></a></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.shortDescription}"></td>
+                <td>
+                    <th:block th:each="category : ${book.category}">
+                        <span th:text="${category.categoryName} + ' '"></span>
+                    </th:block>
+                </td>
+            </tr>
+        </th:block>
+</table>
+
+</br>
+
+</body>
+</html>

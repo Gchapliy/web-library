@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Welcome</title>
+    <title>Add book to Category</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 <body>
@@ -22,7 +22,7 @@
     <th:block th:each="book : ${books}">
         <tr>
             <td th:text="${book.id}"></td>
-            <td><a th:href="@{/book/${book.id}}" th:text="${book.name}"></a></td>
+            <td th:text="${book.name}"></td>
             <td th:text="${book.author}"></td>
             <td th:text="${book.shortDescription}"></td>
             <td>
@@ -30,8 +30,7 @@
                     <span th:text="${category.categoryName} + ' '"></span>
                 </th:block>
             </td>
-            <td><a th:href="@{'/removeCategoryFromBook/' + ${category.id} + '/' + ${book.id}}">Remove from category</a></td>
-
+            <td><a th:href="@{'/addBookToCategory/' + ${category.id} + '/' + ${book.id}}">Add to category</a></td>
         </tr>
     </th:block>
 </table>
