@@ -1,7 +1,7 @@
 package com.example.weblibrary.controller;
 
 import com.example.weblibrary.model.dto.UserForm;
-import com.example.weblibrary.service.UserService;
+import com.example.weblibrary.service.user.UserService;
 import com.example.weblibrary.utils.constants.URLConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,13 +40,12 @@ public class RegistrationController {
             return URLConstants.REGISTRATION_PAGE;
         }
 
-
         if (userService.findUserByName(userForm.getUsername()) != null){
             model.addAttribute("userExistsError", "User with name " + userForm.getUsername() + " already exists");
             return URLConstants.REGISTRATION_PAGE;
         }
 
         userService.saveUser(userForm);
-        return "redirect:/";
+        return "redirect:/login";
     }
 }

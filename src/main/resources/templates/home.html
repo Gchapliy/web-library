@@ -2,12 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Hello World!</title>
+    <title>Welcome</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+<h1 th:inline="text">Welcome to library <span sec:authentication="name"></span></h1>
+
+<a th:href="@{/logout}">Sign Out</a>
+
+</br>
+
+</br>
+<table>
+    <tr>
+        <th>#</th>
+        <th>Category</th>
+    </tr>
+    <th:block th:each="category : ${categories}">
+        <tr>
+            <td th:text="${category.id}"></td>
+            <td><a th:href="@{/category/} + ${category.id}" th:text="${category.categoryName}"></a></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/removeCategory} + ${category.id}">Remove category</a></td>
+        </tr>
+    </th:block>
+</table>
+
+</br>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/addNewCategory}">Add category</a>
+</div>
+
+<a th:href="@{/}">Back</a>
 </body>
 </html>

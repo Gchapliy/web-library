@@ -17,7 +17,6 @@
     </div>
     <div>
         <label> Confirm password: <input type="password" th:field="*{confirmPassword}"/></label>
-<!--        <span th:if="${#fields.hasErrors('PasswordMatches')}" th:errors="*{PasswordMatches}">Password is not valid</span>-->
         <span th:text="${confirmPasswordError != null} ? ${confirmPasswordError}">confirmPassword is not valid</span>
 
     </div>

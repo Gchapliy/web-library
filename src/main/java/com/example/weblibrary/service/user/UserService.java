@@ -1,10 +1,10 @@
-package com.example.weblibrary.service;
+package com.example.weblibrary.service.user;
 
 import com.example.weblibrary.model.dto.UserForm;
 import com.example.weblibrary.model.user.Role;
 import com.example.weblibrary.model.user.User;
-import com.example.weblibrary.repository.RoleRepository;
-import com.example.weblibrary.repository.UserRepository;
+import com.example.weblibrary.repository.user.RoleRepository;
+import com.example.weblibrary.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,8 +39,9 @@ public class UserService implements UserDetailsService {
 
         Role userRole = roleRepository.findByName("ROLE_USER");
 
+        user.setUsername(userForm.getUsername());
         user.setRoles(Collections.singleton(userRole));
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
         userRepository.save(user);
 
         return true;

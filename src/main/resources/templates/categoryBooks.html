@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Welcome</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+</head>
+<body>
+<h1 th:text="${category.categoryName}"></h1>
+
+<a th:href="@{/logout}">Sign Out</a>
+
+</br>
+<table>
+    <tr>
+        <th>#</th>
+        <th>Book name</th>
+        <th>author</th>
+        <th>description</th>
+    </tr>
+    <th:block th:each="book : ${books}">
+        <tr>
+            <td th:text="${book.id}"></td>
+            <td><a th:href="@{/book/${book.id}}" th:text="${book.name}"></a></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.shortDescription}"></td>
+        </tr>
+    </th:block>
+</table>
+
+</br>
+
+<a th:href="@{/home}">Back</a>
+</body>
+</html>
