@@ -2,7 +2,6 @@ package com.example.weblibrary.controller;
 
 import com.example.weblibrary.model.dto.UserForm;
 import com.example.weblibrary.service.user.UserService;
-import com.example.weblibrary.utils.constants.URLConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +18,14 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(URLConstants.REGISTRATION_PAGE)
+    @GetMapping("registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new UserForm());
 
-        return URLConstants.REGISTRATION_PAGE;
+        return "registration";
     }
 
-    @PostMapping(URLConstants.REGISTRATION_PAGE)
+    @PostMapping("registration")
     public String addUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
@@ -37,12 +36,12 @@ public class RegistrationController {
                     model.addAttribute("confirmPasswordError", objectError.getDefaultMessage());
                 }
             });
-            return URLConstants.REGISTRATION_PAGE;
+            return "registration";
         }
 
         if (userService.findUserByName(userForm.getUsername()) != null){
             model.addAttribute("userExistsError", "User with name " + userForm.getUsername() + " already exists");
-            return URLConstants.REGISTRATION_PAGE;
+            return "registration";
         }
 
         userService.saveUser(userForm);

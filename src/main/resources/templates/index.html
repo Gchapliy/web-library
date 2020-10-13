@@ -6,8 +6,11 @@
 <body>
 <div th:fragment="footer">
     <div class="container">
-            <span sec:authorize="isAuthenticated()">| Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
+            <span sec:authorize="isAuthenticated()">
+                Hello: <span sec:authentication="name"></span>
+            </br>
+                <a th:href="@{/home}">To Library</a>
+            </br>
                 <a th:href="@{/logout}">Sign Out</a>
             </span>
             <span sec:authorize="!isAuthenticated()">
