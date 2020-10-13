@@ -111,4 +111,11 @@ public class LibraryController {
 
         return "searchBook";
     }
+
+    @GetMapping("book/{bookId}")
+    public String showBook(@PathVariable("bookId")Long bookId, Model model){
+        model.addAttribute("book", bookService.findById(bookId));
+
+        return "book";
+    }
 }

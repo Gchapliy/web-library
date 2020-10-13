@@ -22,7 +22,7 @@
     <th:block th:each="book : ${books}">
         <tr>
             <td th:text="${book.id}"></td>
-            <td><a th:href="@{/book/${book.id}}" th:text="${book.name}"></a></td>
+            <td><a th:href="@{'/book/' + ${book.id}}" th:text="${book.name}"></a></td>
             <td th:text="${book.author}"></td>
             <td th:text="${book.shortDescription}"></td>
             <td>

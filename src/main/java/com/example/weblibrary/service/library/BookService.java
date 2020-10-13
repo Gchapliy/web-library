@@ -19,6 +19,10 @@ public class BookService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    public Book findById(Long id){
+        return bookRepository.findById(id).get();
+    }
+
     public Set<Book> findAll() {
         return new HashSet<>(bookRepository.findAll());
     }
